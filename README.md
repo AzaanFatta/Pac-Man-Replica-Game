@@ -1,7 +1,7 @@
 # 🟡 Pac-Man Replica (Python + Pygame)
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/3b0e3e48-422c-4b04-b95f-547e15adbda1" alt="Pac-Man Gameplay" width="600"/>
+  <img src="https://github.com/user-attachments/assets/3b0e3e48-422c-4b04-b95f-547e15adbda1" alt="Pac-Man Gameplay" width="300"/>
 </p>
 
 > A from-scratch, modernized **Pac-Man** built with **Python** and **Pygame** — complete with smooth animations, unique ghost behavior, power-up logic, and a responsive arcade maze that scales beautifully across all platforms.
@@ -19,10 +19,11 @@
 This project recreates the charm of the **original Pac-Man** while adding a modern programming twist.  
 Every character, wall, pellet, and animation frame is fully coded and rendered using Python — no external game engine.
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/23830faa-5165-439b-9a63-8d29a06a12ed" width="260" style="margin-right:10px"/>
-  <img src="https://github.com/user-attachments/assets/1623082c-4ebd-4136-8411-576846d86b94" width="260" style="margin-right:10px"/>
-  <img src="assets/screenshots/gameover.png" width="260"/>
-</p>
+  <img src="https://github.com/user-attachments/assets/16f38720-5b1f-4fa5-9cf2-50d84dc6c104" width="35" style="margin-right:10px"/>
+  <img src="https://github.com/user-attachments/assets/f40f48e7-67f9-4e4e-b2e5-caca81a22ed0" width="35" style="margin-right:10px"/>
+  <img src="https://github.com/user-attachments/assets/9bec807a-6d6f-4cfd-ba74-144351853474" width="35" style="margin-right:10px"/>
+  <img src="https://github.com/user-attachments/assets/04f4179f-4cfb-42f1-b3de-bed9f8013c79" width="35" style="margin-right:10px"/>
+
 
 ---
 
@@ -48,13 +49,17 @@ Every character, wall, pellet, and animation frame is fully coded and rendered u
 
 ---
 
-## 🧩 Gameplay Gallery
+## 👻 Ghost Behavior (at a glance)
 
-| Power-Up Mode | Classic Chase | Game Over |
-|:--------------:|:--------------:|:----------:|
-| <img src="assets/screenshots/powerup.png" width="250"/> | <img src="assets/screenshots/chase.png" width="250"/> | <img src="assets/screenshots/gameover.png" width="250"/> |
-
-> Each frame captures the essence of the original — bright colors, fast movement, and relentless ghosts.
+Each ghost is a `Ghost` instance with:
+- **State:** `direction`, `speed`, `dead` (eaten), `in_box`, and a **dynamic target**.
+- **Per‑tile collision** via board grid (R/L/U/D) using the current logical tile (`num1`, `num2`) so turns only occur at legal junctions.
+- **Targeting during normal mode:**
+  - **Blinky**: direct pursuit (straight‑line bias; only turns on collision when blocked).
+  - **Pinky**: prioritizes horizontal choices; vertical only on collision → good ambusher.
+  - **Inky**: favors vertical turns; horizontal turns primarily on collision → pinches vertically.
+  - **Clyde**: opportunistic; switches directions when advantageous to close distance.
+- **Power‑up (frightened):** ghosts flee to a “runaway” target based on the player quadrant; if eaten, they switch to `dead` and head to **return target** (ghost box), then revive.
 
 ---
 
@@ -69,6 +74,47 @@ It blends low-level logic (collision detection, timers, movement paths) with cle
 - Designed to teach — and showcase — **how much you can do with Python alone**.
 
 ---
+
+## 🖼️ UI & Game States
+
+- Bottom HUD shows **Score** and **Lives** (sprite icons).  
+- **Power‑up indicator** lights up while energized; flickers before expiration.  
+- Modal cards for **Game Over** and **Victory** with instant restart on **Space**.
+
+---
+
+
+## 🧱 Board & Collision System
+
+- The maze is driven by `boards` (a 2D int grid). Each integer encodes a **tile primitive**:
+  - `1` pellet • `2` power pellet • `3–8` wall segments/arcs • `9` door into the ghost box.
+- The renderer uses the grid to draw lines/arcs at scaled tile centers — ensuring **identical gameplay feel** across resolutions.
+- Player & ghosts use **center‑point sampling** plus small radii to check collision against tiles at junctions only, enabling smooth turns without clipping.
+
+---
+
+## 🎨 Design Philosophy
+
+This version of Pac-Man was made to **honor the simplicity of retro games** while writing everything manually — no pre-made engines, just Python logic and creativity.
+
+Special attention was given to:
+- Smooth animation flow  
+- Realistic ghost spacing and unpredictability  
+- Player turn responsiveness  
+- Visual clarity on all screen sizes  
+
+---
+
+## 🏁 Performance & Polish
+
+- Constant **60 FPS** with minimal CPU usage  
+- Dynamic scaling with `pygame.SCALED | pygame.RESIZABLE`  
+- Efficient rendering loop with static object caching  
+- Instant restart and clean state resets for endless replayability  
+
+
+---
+
 
 ## 🚀 How to Play Locally
 
@@ -87,47 +133,13 @@ That’s it — the game launches instantly with full controls and scoring.
 
 ---
 
-## 🎨 Design Philosophy
-
-This version of Pac-Man was made to **honor the simplicity of retro games** while writing everything manually — no pre-made engines, just Python logic and creativity.
-
-> “It’s not about copying the original — it’s about understanding what made it feel alive.”
-
-Special attention was given to:
-- Smooth animation flow  
-- Realistic ghost spacing and unpredictability  
-- Player turn responsiveness  
-- Visual clarity on all screen sizes  
-
----
-
-## 🏁 Performance & Polish
-
-- Constant **60 FPS** with minimal CPU usage  
-- Dynamic scaling with `pygame.SCALED | pygame.RESIZABLE`  
-- Efficient rendering loop with static object caching  
-- Instant restart and clean state resets for endless replayability  
-
----
-
-## 💡 Future Enhancements
-
-🔊 **Sound FX & Music** — waka-waka loop, ghost alerts, and victory tones  
-🏆 **High Score System** — persistent local leaderboard  
-🗺️ **Multiple Mazes** — unlockable maps or procedural generation  
-🎮 **Controller Support** — plug-and-play with joystick events  
-🌈 **Themed Modes** — night mode, neon glow, or retro CRT filter  
-
----
-
 ## 🙌 Credits
 
-Built with ❤️ by **Azaan Fatta**  
+Built by **Azaan Fatta**  
 Developed in **Python 3.10** using **Pygame 2.x**  
 
 > Inspired by the original *PAC-MAN®* by Namco — recreated purely for educational and creative purposes.
 
 <p align="center">
-  <img src="https://upload.wikimedia.org/wikipedia/en/5/59/Pac-man.png" width="120"/><br/>
-  <sub>Retro spirit. Modern code.</sub>
+  <img src="https://github.com/user-attachments/assets/768c3989-02c9-4db6-a6af-d21a8fbf19f1" width="120"/><br/>
 </p>
