@@ -18,10 +18,9 @@
 
 This project recreates the charm of the **original Pac-Man** while adding a modern programming twist.  
 Every character, wall, pellet, and animation frame is fully coded and rendered using Python — no external game engine.
-
 <p align="center">
-  <img src="assets/screenshots/powerup.png" width="260" style="margin-right:10px"/>
-  <img src="assets/screenshots/chase.png" width="260" style="margin-right:10px"/>
+  <img src="https://github.com/user-attachments/assets/23830faa-5165-439b-9a63-8d29a06a12ed" width="260" style="margin-right:10px"/>
+  <img src="https://github.com/user-attachments/assets/1623082c-4ebd-4136-8411-576846d86b94" width="260" style="margin-right:10px"/>
   <img src="assets/screenshots/gameover.png" width="260"/>
 </p>
 
